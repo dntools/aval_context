@@ -1,0 +1,59 @@
+
+---
+title: "<span style='font-family: Georgia; font-size: 40px; color: #744700;'>Technical Note: Context-based grading</span>"
+output: 
+    html_document:
+    css: styles.css  # optional, if you use external styles
+    toc: true
+    toc_float: true
+---
+
+<body style="background-color: #faf2e1;">
+
+
+<div style="position: absolute; top: 10px; left: 10px;">
+  <img src="logo.png" width="200px" alt="Logo">
+</div>
+
+<br>
+<br>
+<span style="font-size: 26px; color: #93c47d;">1 Introduction </span>
+
+<br>
+<span style="font-size: 22px;"> This technical note documents a Shiny-based application developed to assess students' grades in a context-aware fashion. It integrates socioeconomic, educational, and logistical factors to rescale and rank academic performance, aiding pedagogical and sociological interpretation.  </span>
+
+<br>
+
+<span style="font-size: 26px; color: #93c47d;">2 -  Rescaling Function </span>
+
+<br>
+
+<span style="font-size: 22px;"> The core transformation relies on linear algebra and multivariate statistics. The function rescales a target variable (e.g., grade) using the Mahalanobis-like transformation.</span>
+
+
+<span style="font-size: 22px;">Given a dataset $X \in \mathbb{R}^{n \times 2}$, where one column is the contextual variable and the other is the score: </span>
+<br>
+<span style="font-size: 22px;">1. Compute the covariance matrix $\Sigma$ of $X$ </span> 
+<br>
+<span style="font-size: 22px;">2. Cholesky Decomposition: $\Sigma = L L^T$ </span>
+<br>
+<span style="font-size: 22px;">3. Compute $L^{-1}$ (pseudo-inverse) </span>
+<br>
+<span style="font-size: 22px;">4. Transform: $X_{rescaled} = X L^{-1}$ </span>
+<br>
+<br>
+<span style="font-size: 22px;">Then rescale the transformed score to original bounds: </span>
+
+
+$$
+\text{nv}_{rescaled} = \left( \frac{nv - \min(nv)}{\max(nv) - \min(nv)} \right) (\max(x) - \min(x)) + \min(x)
+$$
+
+<span style="font-size: 22px;"> An alternative version,forces rescaling between 0 and 10. </span>
+
+
+
+
+<span style="font-size: 22px;">It is important to note that the above formulation may be modified in future editions.</span>
+
+
